@@ -1,13 +1,31 @@
 <?php
 session_start(); // Start the session
 
+include 'functions.php'; // Include functions file for needed functions
+
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])){
     header("Location: login.php"); // Redirect to the login if not logged in
     exit;
 }
 
-// User logged in, show welcome message
+// Include the database connection file
+include 'db.php'; // Make sure this file includes the database connection
+
+// Get the user_id from the session
+$user_id = $_SESSION['user_id'];
+
+// Call the function to get the username
+$username = getUsernameById($user_id, $conn);
+
+if ($username === null) {
+    // If username not found, log them out (optional)
+    session_destroy();
+    header("Location: login.php");
+    exit;
+}
+
+$conn->close(); // Close the database connection
 ?>
 
 <!DOCTYPE html>
@@ -18,9 +36,8 @@ if (!isset($_SESSION['user_id'])){
         <title>Welcome</title>
     </head>
     <body>
-
-        <h2>Welcome, <?php echo htmlspecialchars($_SESSION['user_id']); ?>!</h2>
+        <h2>Welcome, <?php echo htmlspecialchars($username); ?>!</h2>
         <p>You are now logged in.</p>
-        
+        <a href="logout.php">Logout</a>
     </body>
 </html>
