@@ -38,6 +38,9 @@ $conn->close(); // Close the database connection
     <body>
         <h2>Welcome, <?php echo htmlspecialchars($username); ?>!</h2>
         <p>You are now logged in.</p>
+        <h3>Select from the following options:</h3>
+
+
         <a href="logout.php">Logout</a>
     </body>
 </html>
