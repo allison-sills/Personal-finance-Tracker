@@ -28,9 +28,9 @@ if (isset($_SESSION["user_id"])) {
      }
      ?>
 
-     <form method="POST" action="process-login.php">
+     <form method="POST" action="process_login.php">
         <label for="username">Username:</label><br>
-        <input type="text" id="username" name="password" required><br><br>
+        <input type="text" id="username" name="username" required><br><br>
 
         <label for="password">Password:</label><br>
         <input type="password" id="password" name="password" required><br><br>

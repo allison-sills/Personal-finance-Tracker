@@ -14,12 +14,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
     $stmt->execute(); // Execute the query
     $result = $stmt->get_result(); // Get the result of the query
     
+    
    // Check if the username exists and the password is correct
    if ($result->num_rows > 0){
     $row = $result->fetch_assoc(); // Fetch the user data
-    if($password === $row['password']){ // Compare the password
+    
+    if(password_verify($password, $row['password'])){ // Compare the password
         $_SESSION['user_id'] = $row['user_id']; // Store user data in session
         $_SESSION['logged_in'] = true;
+        // Close statement and connection before redirecting
+        $conn->close(); 
+        $stmt->close();
         header("Location: welcome.php");
         exit;
     }
@@ -33,4 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
     header("Location: login.php");
     exit;
     }
+
+
 }
